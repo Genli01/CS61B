@@ -96,10 +96,11 @@ public class IntList {
     public static IntList catenate(IntList A, IntList B) {
         IntList res = new IntList(A.first, null);
         IntList ptr = res;
-        A = A.rest;
-        while (A != null) {
-            ptr.rest = new IntList(A.first, null);
-            A = A.rest;
+        IntList Aptr = A;
+        Aptr = Aptr.rest;
+        while (Aptr != null) {
+            ptr.rest = new IntList(Aptr.first, null);
+            Aptr = Aptr.rest;
             ptr = ptr.rest;
         }
 
