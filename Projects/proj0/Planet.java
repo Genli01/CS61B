@@ -66,5 +66,21 @@ public class Planet {
         return netForceExertedByY;
     }
 
+    public void update(double dt, double fX, double fY) {
+        /*anet,x = Fnet,x / m,
+          anet,y = Fnet,y / m,
+          vnew,x = vold,x + dt * anet,x,
+          vnew,y = vold,y + dt * anet,y,
+          pnew,x = pold,x + dt * vnew,x,
+          pnew,y = pold,y + dt * vnew,y,
+        */
+        double aNetX = fX / mass;
+        double aNetY = fY / mass;
+        xxVel = xxVel + dt * aNetX;
+        yyVel = yyVel + dt * aNetY;
+        xxPos = xxPos + dt * xxVel;
+        yyPos = yyPos + dt * yyVel;
+    }
+
 
 }
