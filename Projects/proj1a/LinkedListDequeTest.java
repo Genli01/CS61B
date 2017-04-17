@@ -50,8 +50,10 @@ public class LinkedListDequeTest {
 
 		lld1.addLast("middle");
 		passed = checkSize(2, lld1.size()) && passed;
-
+		System.out.println(lld1.getRecursive(0));
 		lld1.addLast("back");
+		System.out.println(lld1.getRecursive(1));
+		System.out.println(lld1.getRecursive(2));
 		passed = checkSize(3, lld1.size()) && passed;
 
 		System.out.println("Printing out deque: ");
@@ -88,5 +90,6 @@ public class LinkedListDequeTest {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
+
 	}
 } 

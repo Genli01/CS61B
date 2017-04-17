@@ -42,11 +42,9 @@ public class LinkedListDeque<T> {
         size++;
     }
 
-    /* Adds an item to the front of the Deque. */
+    /* Adds an item to the back of the Deque. */
     public void addLast(T Item) {
-        Item addToLast = new Item(Item);
-        addToLast.prev = sentinel.prev;
-        addToLast.next = sentinel;
+        Item addToLast = new Item(Item, sentinel.prev, sentinel);
         sentinel.prev.next = addToLast;
         sentinel.prev = addToLast;
         size++;
@@ -96,7 +94,6 @@ public class LinkedListDeque<T> {
 
     /* Removes and returns the item at the back of the Deque.
     If no such item exists, returns null.*/
-
     public Item removeLast() {
         if (size == 0) {
             return null;
@@ -108,10 +105,10 @@ public class LinkedListDeque<T> {
             return removed;
         }
     }
+
     /* Gets the item at the given index, where 0 is the front,
     1 is the next item, and so forth. If no such item exists,
     returns null. */
-
     public Item get(int index) {
         if (index >= size) {
             return null;
@@ -123,6 +120,21 @@ public class LinkedListDeque<T> {
             }
             return ptr;
         }
+    }
+    private Item getRecursive(Item item, int index){
+
+        if (index == 0) {
+            return item;
+        }
+        else {
+            return getRecursive(item.next, index - 1);
+        }
+
+    }
+    public Item getRecursive(int index) {
+        Item item = getRecursive(sentinel.next, index);
+        //printItem(item);
+        return item;
     }
 
 }

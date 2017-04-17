@@ -1,3 +1,5 @@
+import javax.naming.RefAddr;
+
 /**
  * Created by Gen on 4/11/17.
  */
@@ -7,6 +9,7 @@ public class ArrayDeque<Item> {
     private int nextFirst;
     private int nextLast;
     private Item[] items;
+    private final int RFACTOR = 2;
 
     public ArrayDeque() {
         size = 0;
@@ -14,53 +17,7 @@ public class ArrayDeque<Item> {
         nextFirst = items.length / 2;
         nextLast = nextFirst + 1;
     }
-    public static void main(String[] args) {
-        ArrayDeque<String> test1 = new ArrayDeque<>();
-        test1.addFirst("1111");
-        System.out.println(test1.get(0));
-        test1.addFirst("2222");
-        System.out.println(test1.get(1));
-        test1.addFirst("3333");
-        test1.addFirst("4444");
-        test1.addFirst("5555");
-        System.out.println(test1.get(4));
-        System.out.println(test1.get(5));
-        System.out.println(test1.get(0));
-        //test1.removeFirst();
-        test1.addFirst("6666");
-        test1.addFirst("7777");
-        test1.addFirst("8888");
-        System.out.println(test1.get(8));
-        test1.addFirst("9999");
-        test1.addFirst("10");
-/*
-        ArrayDeque<String> test2 = new ArrayDeque<>();
-        test2.addLast("1111");
-        test2.addLast("2222");
-        test2.addLast("3333");
-        test2.removeLast();
-        test2.addLast("4444");
-        test2.addLast("5555");
-        test2.addLast("6666");
-        test2.addLast("7777");
-        test2.addLast("8888");
-        test2.addLast("9999");
-        test2.addLast("10");
 
-        ArrayDeque<String> test3 = new ArrayDeque<>();
-        test3.addFirst("1111");
-        test3.addFirst("2222");
-        test3.addFirst("3333");
-        test3.addFirst("4444");
-        test3.addFirst("5555");
-        test3.removeLast();
-        test3.addLast("6666");
-        test3.addLast("7777");
-        test3.addLast("8888");
-        test3.addLast("9999");
-        test3.addLast("10");*/
-
-    }
     /* Adds an item to the front of the Deque. */
     public void addFirst(Item item) {
         items[nextFirst] = item;
@@ -71,12 +28,12 @@ public class ArrayDeque<Item> {
             nextFirst -= 1;
         }
         if (nextFirst == nextLast) {
-            doubleSize(items.length * 2);
+            resize(items.length * RFACTOR);
         }
 
     }
 
-    /* Adds an item to the front of the Deque. */
+    /* Adds an item to the back of the Deque. */
     public void addLast(Item item) {
         items[nextLast] = item;
         size++;
@@ -86,24 +43,31 @@ public class ArrayDeque<Item> {
             nextLast++;
         }
         if (nextLast == nextFirst) {
-            doubleSize(items.length * 2);
+            resize(items.length * RFACTOR);
         }
 
 
     }
 
-    public void doubleSize(int capacity) {
+    public void resize(int capacity) {
 
-        int position = nextFirst; //nextFirst always equals to nextLast when doubleSize get called
+        //int position = nextFirst; //nextFirst always equals to nextLast when resize get called
         int currentSize = items.length;
-        Item[] doubledItems = (Item[]) new Object[capacity];
-        for (int i = position + 1; i < currentSize; i++) {
-            doubledItems[i - position - 1] = items[i];
+        Item[] newItems = (Item[]) new Object[capacity];
+        if (nextFirst >= nextLast) {
+            System.arraycopy(items, nextFirst + 1, newItems, 0, currentSize - nextFirst - 1);
+            System.arraycopy(items, 0, newItems, currentSize - nextFirst - 1, nextLast);
+        }
+        /*for (int i = position + 1; i < currentSize; i++) {
+            newItems[i - position - 1] = items[i];
         }
         for (int i = 0; i < position; i++) {
-            doubledItems[i + currentSize - position - 1] = items[i];
+            newItems[i + currentSize - position - 1] = items[i];
+        }*/
+        else {
+            System.arraycopy(items, nextFirst + 1, newItems, 0, size);
         }
-        items = doubledItems;
+        items = newItems;
         nextFirst = items.length - 1;
         nextLast = size;
     }
@@ -134,6 +98,7 @@ public class ArrayDeque<Item> {
                 System.out.print(items[i] + " ");
             }
         }
+        System.out.println();
 
     }
 
@@ -155,6 +120,9 @@ public class ArrayDeque<Item> {
             nextFirst++;
         }
         size--;
+        if ((double)size / items.length < 0.25 && items.length > 8) {
+            resize(items.length / RFACTOR);
+        }
         return itemRemoved;
     }
 
@@ -174,6 +142,9 @@ public class ArrayDeque<Item> {
             nextLast--;
         }
         size--;
+        if ((double)size / items.length < 0.25 && items.length > 8) {
+            resize(items.length / RFACTOR);
+        }
         return itemRemoved;
     }
 
