@@ -30,12 +30,12 @@ public class IntListTest {
     @Test
     public void testReverse() {
         IntList L1 = IntList.list(1, 2, 3);
-        L1.reverse(L1);
+        IntList.reverse(L1);
         assertEquals(IntList.list(3, 2, 1), L1);
         assertNotEquals(IntList.list(1, 2, 3), L1);
         IntList L2 = new IntList();
         //IntList L3 = new IntList();
-        assertEquals(L2.reverse(L2), null);
+        assertEquals(IntList.reverse(L2), null);
     }
 
     /**

@@ -10,11 +10,11 @@ public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -88,9 +88,12 @@ public class IntList {
         return size;
 
     }
-    public static IntList reverse(IntList A){
-        if (A.first == 0) {return null;}
-        int size = A.size(A);
+
+    public static IntList reverse(IntList A) {
+        if (A.first == 0) {
+            return null;
+        }
+        int size = size(A);
         IntList ptr = A;
         int[] list = new int[size];
         for (int i = 0; i < size; i++) {
@@ -113,7 +116,6 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
         IntList ptr = A;
         while (ptr.rest != null) {
             ptr = ptr.rest;
@@ -129,11 +131,11 @@ public class IntList {
     public static IntList catenate(IntList A, IntList B) {
         IntList res = new IntList(A.first, null);
         IntList ptr = res;
-        IntList Aptr = A;
-        Aptr = Aptr.rest;
-        while (Aptr != null) {
-            ptr.rest = new IntList(Aptr.first, null);
-            Aptr = Aptr.rest;
+        IntList aPtr = A;
+        aPtr = aPtr.rest;
+        while (aPtr != null) {
+            ptr.rest = new IntList(aPtr.first, null);
+            aPtr = aPtr.rest;
             ptr = ptr.rest;
         }
 
@@ -192,10 +194,7 @@ public class IntList {
                 return false;
             }
         }
-        if (p != null || L != null) {
-            return false;
-        }
-        return true;
+        return !(p != null || L != null);
     }
 
     /**
@@ -214,26 +213,30 @@ public class IntList {
         IntList tortoise = A;
         IntList hare = A;
 
-        if (A == null)
+        if (A == null) {
             return 0;
+        }
 
         int cnt = 0;
 
 
         while (true) {
             cnt++;
-            if (hare.rest != null)
+            if (hare.rest != null) {
                 hare = hare.rest.rest;
-            else
+            } else {
                 return 0;
+            }
 
             tortoise = tortoise.rest;
 
-            if (tortoise == null || hare == null)
+            if (tortoise == null || hare == null) {
                 return 0;
+            }
 
-            if (hare == tortoise)
+            if (hare == tortoise) {
                 return cnt;
+            }
         }
     }
 
