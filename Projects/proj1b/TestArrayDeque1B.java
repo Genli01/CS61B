@@ -1,7 +1,10 @@
 /**
  * Created by Gen on 4/19/17.
  */
-
+/*
+Catches the bug in StudentDeque, however, without access to auto grader, cannot confirm if the
+output format fits project requirement.
+*/
 import org.junit.Test;
 import static org.junit.Assert.*;
 
