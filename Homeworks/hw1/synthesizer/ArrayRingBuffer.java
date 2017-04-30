@@ -70,6 +70,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
 
     public T dequeue() {
+        if (fillCount == 0) {
+            throw new RuntimeException("Ring Buffer Underflow");
+        }
         T removedItem = arrayRing[first];
         arrayRing[first] = null;
         first = increaseOne(first);
@@ -84,6 +87,4 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         T firstItem = arrayRing[first];
         return firstItem;
     }
-
-    // TODO: When you get to part 5, implement the needed code to support iteration.
 }

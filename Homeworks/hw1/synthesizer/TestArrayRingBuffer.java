@@ -30,6 +30,10 @@ public class TestArrayRingBuffer {
         assertEquals(2, arb.fillCount());
         assertEquals(6, arb.capacity());
         assertEquals((Integer)7, arb.peek());
+
+        arb.dequeue();
+        arb.dequeue();
+        //arb.dequeue();
     }
 
     /** Calls tests for ArrayRingBuffer. */
